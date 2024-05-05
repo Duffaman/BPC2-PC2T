@@ -340,7 +340,7 @@ public class DBQueries {
 		    }
 		    Connection conn = DBConn.getDBConnection();
 		    String selectAutor =
-		        "SELECT * FROM knihy WHERE autor = *?* ORDER BY rok ASC";
+		        "SELECT * FROM knihy WHERE autor LIKE ? ORDER BY rok ASC";
 		    try (PreparedStatement prStmt = conn.prepareStatement(selectAutor);) {
 		    	 prStmt.setString(1, autor);
 		      ResultSet rs = prStmt.executeQuery();
