@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Test {
 	
-		public static int pouzeCelaCisla(Scanner sc) {
+	public static int pouzeCelaCisla(Scanner sc) {
 			int cislo = 0;
 			try {
 				cislo = sc.nextInt();
