@@ -10,20 +10,46 @@ public class DBQueries {
 	  * 
 	  * insert queries 
 	  *
+	  *
+	  *
+	  *test pro novou knihu (zdali jiz neni nazev knihy obsazen)
 	  */
+	public boolean testIfExists(String nazev) {
+		 if (nazev == null) {
+		      throw new NullPointerException("Musis zadat nazev knihy!");
+		    } else if (nazev == "") {
+		      throw new IllegalArgumentException("Nazev knihy nesmi byt prazdny!");
+		    }
+
+	    Connection conn = DBConn.getDBConnection();
+	    String testUserExistence = "SELECT * FROM Knihy WHERE nazev = ?";
+
+	    try (PreparedStatement prStmt = conn.prepareStatement(testUserExistence);) {
+	      prStmt.setString(1, nazev);
+	      ResultSet rs = prStmt.executeQuery();
+	      if (rs.next())
+	        return true;
+	      else
+	        return false;
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	      return false;
+	    }
+	  }
 	public void vlozRoman(String nazev, String autor, String zanr, int rok) {
 	    if (nazev == null || autor == null || zanr == null || rok == 0)
 	      throw new NullPointerException("Nezadal jsi nazev, autora a zanr romanu!");
 
 	    Connection conn = DBConn.getDBConnection();
 
-	    String knihaVloz = "INSERT INTO user " + "(nazev,autor,zanr,rok,dostupnost)" + "VALUES(?,?,?,?,true)";
+	    String knihaVloz = "INSERT INTO knihy " + "(nazev,autor,zanr,rok,dostupnost)" + "VALUES(?,?,?,?,?)";
 
 	    try (PreparedStatement prStmt = conn.prepareStatement(knihaVloz)) {
 	      prStmt.setString(1, nazev);
 	      prStmt.setString(2, autor);
 	      prStmt.setString(3, zanr);
 	      prStmt.setInt(4, rok);
+	      prStmt.setBoolean(5, true);
 
 	      prStmt.executeUpdate();
 
@@ -40,14 +66,14 @@ public class DBQueries {
 
 	    Connection conn = DBConn.getDBConnection();
 
-	    String knihaVloz = "INSERT INTO user " + "(nazev,autor,rocnik,rok)" + "VALUES(?,?,?,?,true)";
+	    String knihaVloz = "INSERT INTO knihy " + "(nazev,autor,rocnik,rok,dostupnost)" + "VALUES(?,?,?,?,?)";
 
 	    try (PreparedStatement prStmt = conn.prepareStatement(knihaVloz)) {
 	      prStmt.setString(1, nazev);
 	      prStmt.setString(2, autor);
 	      prStmt.setInt(3, rocnik);
 	      prStmt.setInt(4, rok);
-
+	      prStmt.setBoolean(5, true);
 	      prStmt.executeUpdate();
 
 	      System.out.println("yippie");
@@ -73,7 +99,7 @@ public class DBQueries {
 		    try (PreparedStatement prStmt = conn.prepareStatement(knihaDelete);) {
 		      prStmt.setString(1, nazev);
 		      prStmt.executeUpdate();
-		      System.out.println("Vymazal jsi knihu!");
+		      System.out.println("smazal jsi knihu!");
 		    } catch (SQLException e) {
 		      e.printStackTrace();
 		    }
