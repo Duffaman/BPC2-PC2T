@@ -53,7 +53,7 @@ public class DBQueries {
 
 	      prStmt.executeUpdate();
 
-	      System.out.println("yippie");
+	      System.out.println("Byl pridan roman");
 	    } catch (SQLException e) {
 	      System.out.println("Neco se pokazilo, zkus znova nebo je spatne kod");
 	    }
@@ -76,7 +76,7 @@ public class DBQueries {
 	      prStmt.setBoolean(5, true);
 	      prStmt.executeUpdate();
 
-	      System.out.println("yippie");
+	      System.out.println("Byla pridana ucebnice");
 	    } catch (SQLException e) {
 	      System.out.println("Neco se pokazilo, zkus znova nebo je spatne kod");
 	    }
